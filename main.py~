@@ -1,0 +1,21 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+import time
+import csv
+
+driver = webdriver.Chrome()
+
+# Открываем страницу
+driver.get("https://www.cian.ru/snyat-kvartiru-1-komn-ili-2-komn/")
+
+# Подождем, чтобы страница полностью загрузилась
+time.sleep(5)
+
+price_elements = driver.find_elements(By.XPATH, "//span[contains(@class, 'price')]")
+
+with open('prices.csv', mode='w', newline='', encoding='utf-8') as file:
+    writer = csv.writer(file)
+    writer.writerow(['Номер квартиры', 'Цена'])
+    for i, price in enumerate(prices, start=1):
+        writer.writerow([i, price])
